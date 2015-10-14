@@ -63,7 +63,9 @@ public class AllUpdatedBioticMissions {
                         mission.getStartYear(), platformPath, cruiseCode);
                 if (dataset != null) {
                     Date lastDBUpdate = bioticMissionDAO.getMaxMissionLog(mission.getId());
-                    if (lastDBUpdate.after(dataset.getUpdated().toGregorianCalendar().getTime())) {
+                    
+                            
+                    if  ((lastDBUpdate!= null ) && (lastDBUpdate.after(dataset.getUpdated().toGregorianCalendar().getTime()))) {
                         result.add(mission.getId());
                     } else {
                         LOG.debug("No updated needed for:" + mission.getId());
@@ -77,12 +79,7 @@ public class AllUpdatedBioticMissions {
                 
             }
         }
-        
-/*        for (int i = result.size() - 1; i > 2; i--) {
-            result.remove(i);
-        }*/
-        
-        return result;
+          return result;
     }
     
 }

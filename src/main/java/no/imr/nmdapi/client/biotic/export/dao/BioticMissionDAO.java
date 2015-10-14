@@ -46,7 +46,7 @@ public class BioticMissionDAO {
                 + " from nmdmission.cruisemission cm"
                 + " where cm.id_mission = ?";
   
-    private String GET_MAX_MISSION_LOG = " SELECT id_mission, max(\"timestamp\"),datatype"
+    private String GET_MAX_MISSION_LOG = " SELECT  max(\"timestamp\") "
             + " FROM nmdmission.missionlog "
             + " where datatype = 'biotic' and"
             + " id_mission = ?  ";
@@ -65,7 +65,7 @@ public class BioticMissionDAO {
       }
       
       public Date getMaxMissionLog(String missionID) {
-          return jdbcTemplate.queryForObject(missionID,Date.class,missionID);
+          return jdbcTemplate.queryForObject(GET_MAX_MISSION_LOG,Date.class,missionID);
       }
       
     
