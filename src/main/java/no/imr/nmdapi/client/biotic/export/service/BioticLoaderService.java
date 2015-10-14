@@ -71,7 +71,7 @@ public class BioticLoaderService {
 
         MissionType bioticMission = bioticGenerator.generate(mission,cruiseCode);
 
-        if (cruiseCode == null ) {
+        if ( (cruiseCode == null )  || (cruiseCode.trim().length()==0 ) )  {
           delivery = bioticMissionDAO.getDelivery(missionID);
         } else {
            delivery = cruiseCode;
@@ -112,6 +112,7 @@ public class BioticLoaderService {
         File tempFile = new File(FileUtils.getTempDirectory().getAbsolutePath().concat(File.separator).concat(tempFilename));
         
         try {
+            LOG.error("Marshall file :"+tempFile);
             marshaller.marshal(rootElement,tempFile);
             FileUtils.copyFile(tempFile, destinationFile);
             tempFile.delete();
