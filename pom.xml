@@ -111,6 +111,12 @@
             
             
         <dependency>
+            <groupId>no.imr.nmd.commons.dataset.jaxb</groupId>
+            <artifactId>commons-dataset-jaxb</artifactId>
+            <version>1.0.9</version>
+        </dependency>
+            
+        <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-client</artifactId>
             <version>5.11.1</version>
@@ -136,11 +142,12 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
+ 
     <profiles>
         <profile>
             <id>localDeploy</id>
             <build>
+                     <finalName>nmdBioticQueue</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -160,6 +167,7 @@
           <activeByDefault>true</activeByDefault>
         </activation>
 	<build>
+               <finalName>nmdBioticQueue</finalName>
 	  <plugins>
 	    <plugin>
               <groupId>org.apache.maven.plugins</groupId>
