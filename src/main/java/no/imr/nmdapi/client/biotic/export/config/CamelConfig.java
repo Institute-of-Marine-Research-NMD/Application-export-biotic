@@ -3,9 +3,11 @@ package no.imr.nmdapi.client.biotic.export.config;
 import no.imr.messaging.processor.ExceptionProcessor;
 import no.imr.nmdapi.exceptions.CantWriteFileException;
 import no.imr.nmdapi.exceptions.S2DException;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.javaconfig.SingleRouteCamelConfiguration;
 import org.apache.camel.routepolicy.quartz.CronScheduledRoutePolicy;
+import org.apache.camel.util.UnsafeUriCharactersEncoder;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,14 +36,18 @@ public class CamelConfig extends  SingleRouteCamelConfiguration  implements Init
             @Override
             public void configure() {
                 
-             CronScheduledRoutePolicy startPolicy = new CronScheduledRoutePolicy();
-                 startPolicy.setRouteStartTime(configuration.getString("cron.activation.time"));
-
                 onException(CantWriteFileException.class).continued(true).
                         process(new ExceptionProcessor(configuration.getString("application.name"))).
                         to("jms:queue:".concat(configuration.getString("queue.outgoing.criticalFailure")));
                 
-                from("timer://runOnce?repeatCount=1&delay=5000").routePolicy(startPolicy) 
+                                
+                onException(Exception.class)
+                        .handled(true) 
+                        .log(LoggingLevel.ERROR,"Error in routes");
+                
+                
+                 from("quartz://cacheRefresh?cron="+UnsafeUriCharactersEncoder.encode(configuration.getString("cron.activation.time")))
+                 .from("timer://runOnce?repeatCount=1&delay=5000")
                         .to("getAllUpdatedBioticMissions")
                         .split(body())
                         .to("bioticLoaderService")
