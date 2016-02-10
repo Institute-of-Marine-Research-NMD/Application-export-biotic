@@ -112,7 +112,6 @@ public class BioticLoaderService {
         File tempFile = new File(FileUtils.getTempDirectory().getAbsolutePath().concat(File.separator).concat(tempFilename));
         
         try {
-            LOG.error("Marshall file :"+tempFile);
             marshaller.marshal(rootElement,tempFile);
             FileUtils.copyFile(tempFile, destinationFile);
             tempFile.delete();
