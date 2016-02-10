@@ -4,7 +4,7 @@
    
     <groupId>no.imr.nmdapi.client.apps</groupId>
     <artifactId>bioticLoader</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.4-SNAPSHOT</version>
     <packaging>war</packaging>
      <name>Application - NMDBiotic loader</name>
 
