@@ -4,7 +4,7 @@
    
     <groupId>no.imr.nmdapi.client.apps</groupId>
     <artifactId>bioticLoader</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
     <packaging>war</packaging>
      <name>Application - NMDBiotic loader</name>
 
@@ -206,7 +206,7 @@
         <connection>scm:git:git@github.com:Institute-of-Marine-Research-NMD/Application-export-biotic.git</connection>
         <url>scm:git:git@github.com:Institute-of-Marine-Research-NMD/Application-export-biotic.git</url>
         <developerConnection>scm:git:git@github.com:Institute-of-Marine-Research-NMD/Application-export-biotic.git</developerConnection>
-        <tag>bioticLoader-1.0.3</tag>
+        <tag>HEAD</tag>
     </scm>
     <distributionManagement>
         <repository>
