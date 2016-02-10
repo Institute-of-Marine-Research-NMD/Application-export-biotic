@@ -41,9 +41,9 @@ public class CamelConfig extends  SingleRouteCamelConfiguration  implements Init
                         to("jms:queue:".concat(configuration.getString("queue.outgoing.criticalFailure")));
                 
                                 
-                onException(Exception.class)
-                        .handled(true) 
-                        .log(LoggingLevel.ERROR,"Error in routes");
+            //    onException(Exception.class)
+             //           .handled(true) 
+               //         .log(LoggingLevel.ERROR,"Error in routes");
                 
                 
                  from("quartz://cacheRefresh?cron="+UnsafeUriCharactersEncoder.encode(configuration.getString("cron.activation.time")))
