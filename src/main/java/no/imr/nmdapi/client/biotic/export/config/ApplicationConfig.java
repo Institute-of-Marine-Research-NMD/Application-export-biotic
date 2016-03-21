@@ -1,10 +1,9 @@
 package no.imr.nmdapi.client.biotic.export.config;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import no.imr.messaging.processor.ExceptionProcessor;
 import no.imr.nmdapi.client.biotic.export.BioticGenerator;
+import no.imr.nmdapi.client.biotic.route.GenerateAll;
+import no.imr.nmdapi.client.biotic.route.GenerateUpdated;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
@@ -38,17 +37,19 @@ public class ApplicationConfig {
         return new BioticGenerator();
     }
     
-
     @Bean
-     public Marshaller marshaller() throws JAXBException {
-     JAXBContext ctx = JAXBContext.newInstance("no.imr.nmdapi.generic.nmdbiotic.domain.v1");
-      Marshaller bioticMarshaller = ctx.createMarshaller();
-        bioticMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        bioticMarshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-        return bioticMarshaller;
-     }
-        
-   
+    public GenerateAll generareAllRoute() {
+        return new GenerateAll();
+    }
+
+   @Bean
+    public GenerateUpdated generareUpdatedlRoute() {
+        return new GenerateUpdated();
+    }
+
+    
+    
+
     
      
 }
