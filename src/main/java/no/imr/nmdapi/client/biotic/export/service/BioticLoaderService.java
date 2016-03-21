@@ -108,8 +108,7 @@ public class BioticLoaderService {
                 concat(DATASET_CONTAINER_DELIMITER).concat(delivery));
         ex.getOut().setBody("Updated cruise: "+delivery);
         
-        LOG.debug("Generated biotic for cruise:"+delivery+" to "+destinationFile
-        );
+        LOG.debug("Generated biotic for cruise:"+delivery+" to "+destinationFile);
         
     } 
 
