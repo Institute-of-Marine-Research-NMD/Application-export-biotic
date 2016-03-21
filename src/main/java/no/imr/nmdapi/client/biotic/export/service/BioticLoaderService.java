@@ -58,18 +58,9 @@ public class BioticLoaderService {
     BioticGenerator bioticGenerator;
   
     private  PathGenerator pathGenerator = new PathGenerator();
-    private Marshaller marshaller;
-    
     
     public void generatorBioticToFile(Exchange ex) throws PropertyException, JAXBException {
-            
-            
-     JAXBContext ctx = JAXBContext.newInstance("no.imr.nmdapi.generic.nmdbiotic.domain.v1");
-      marshaller = ctx.createMarshaller();
-      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-      marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-        
-   
+    
         
         String missionID=ex.getIn().getBody(String.class);
         String delivery;
@@ -119,6 +110,11 @@ public class BioticLoaderService {
         File tempFile = new File(FileUtils.getTempDirectory().getAbsolutePath().concat(File.separator).concat(tempFilename));
         
         try {
+            JAXBContext ctx = JAXBContext.newInstance("no.imr.nmdapi.generic.nmdbiotic.domain.v1");
+            Marshaller marshaller = ctx.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            
             marshaller.marshal(rootElement,tempFile);
             FileUtils.copyFile(tempFile, destinationFile);
             tempFile.delete();
