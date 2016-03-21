@@ -102,7 +102,7 @@ public class BioticLoaderService {
         ex.getOut().setHeader("imr:qualityassured", QualityEnum.NONE.toString());
         ex.getOut().setHeader("imr:updated", getXMLGregorianCalendar().toString());
         ex.getOut().setHeader("imr:description", "");
-        ex.getOut().setHeader("imr:datasetscontainer", bioticMission.getMissiontype().
+        ex.getOut().setHeader("imr:datasetscontainer", bioticMission.getMissiontypename().
                 concat(DATASET_CONTAINER_DELIMITER).concat(bioticMission.getYear()).
                 concat(DATASET_CONTAINER_DELIMITER).concat(platformPath).
                 concat(DATASET_CONTAINER_DELIMITER).concat(delivery));
