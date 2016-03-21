@@ -82,7 +82,7 @@ public class BioticGenerator  {
       
         MissionType biotic = new MissionType();
         biotic.setMissionnumber(String.valueOf(mission.getMissionNumber()));
-        biotic.setMissiontype(mission.getMissionType());
+        biotic.setMissiontype(mission.getMissionTypeCode());
         biotic.setMissiontypename(mission.getMissionType());
         biotic.setYear(mission.getStartYear());
 
