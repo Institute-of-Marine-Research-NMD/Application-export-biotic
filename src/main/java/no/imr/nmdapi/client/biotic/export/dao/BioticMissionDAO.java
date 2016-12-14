@@ -53,7 +53,7 @@ public class BioticMissionDAO {
     
      private String COUNT_FISH_STATION =" select count(*) stationcount"
              + " from nmdbiotic.fishstation "
-             + "where id_m_mission=?";
+             + "where id_m_mission=?  and id_r_platform is not null and id_r_equipment is not null and id_r_nation is not null ";
         
    
       public List<Mission>  getAllBioticMissions(){
