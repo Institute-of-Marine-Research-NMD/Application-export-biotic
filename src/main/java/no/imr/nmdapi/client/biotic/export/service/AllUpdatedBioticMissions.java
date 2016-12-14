@@ -1,10 +1,15 @@
 package no.imr.nmdapi.client.biotic.export.service;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import no.imr.nmd.commons.dataset.jaxb.DataTypeEnum;
 import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmdapi.client.biotic.export.dao.BioticMissionDAO;
@@ -58,6 +63,9 @@ public class AllUpdatedBioticMissions {
             
             File dataFile = pathGenerator.generatePath(configuration.getString("file.location"),
                     mission.getMissionType(), mission.getStartYear(), platformPath, cruiseCode, "biotic");
+            
+            LOG.debug("Check dataset:" +mission.getId()+" "+dataFile.toString());
+    
             if (dataFile.exists()) {
                 DatasetType dataset = nmdDatasetDao.getDatasetByName(DataTypeEnum.BIOTIC, "data", mission.getMissionType(),
                         mission.getStartYear(), platformPath, cruiseCode);
@@ -66,20 +74,62 @@ public class AllUpdatedBioticMissions {
                     
                             
                     if  ((lastDBUpdate!= null ) && (lastDBUpdate.after(dataset.getUpdated().toGregorianCalendar().getTime()))) {
+                      LOG.debug("Regen as DB date is later");
                         result.add(mission.getId());
                     } else {
-                        LOG.debug("No updated needed for:" + mission.getId());
+                        int databaseStationCount = bioticMissionDAO.getFishStationCount(mission.getId());
+                        int fileStationCount = countOccurences(dataFile,"<fishstation");
+                        if (databaseStationCount != fileStationCount) {
+                           LOG.debug("Regen as file/db station count do not match "+mission.getId()+"  file count:"+fileStationCount+" db count "+databaseStationCount);
+                           result.add(mission.getId());
+
+                        }
+                        //LOG.debug("No updated needed for:" + mission.getId()+" file count:"+fileStationCount+" db count "+databaseStationCount);
+                        
                     }
                     
                 } else {
+                    LOG.debug("Regen as dataset  not present");
                     result.add(mission.getId());
                 }
+                
             } else {
+                LOG.debug("Regen as file not present");
+
                 result.add(mission.getId());                
                 
             }
         }
+        
           return result;
+    }
+
+    private int countOccurences(File dataFile, String match) {
+        int result = 0;
+        BufferedReader reader=null;
+        try {
+            reader =new BufferedReader(new FileReader(dataFile));
+            String line;
+            while ( (line=reader.readLine()) != null) {
+                if (line.contains(match)) {
+                    result++;
+                }
+            }
+        } catch (FileNotFoundException ex) {
+             LOG.debug("Can not open file: "+dataFile.getAbsolutePath());
+        } catch (IOException ex) {
+             LOG.debug("Can not read  file: "+dataFile.getAbsolutePath());
+        } finally {
+            try {
+                if (reader != null ) {
+                   reader.close();
+                }
+            } catch (IOException ex) {
+                 LOG.debug("Can not close file: "+dataFile.getAbsolutePath());
+           }
+        }
+        
+        return result;
     }
     
 }

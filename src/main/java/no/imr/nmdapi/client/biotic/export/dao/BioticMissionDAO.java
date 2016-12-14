@@ -50,6 +50,10 @@ public class BioticMissionDAO {
             + " FROM nmdmission.missionlog "
             + " where datatype = 'biotic' and"
             + " id_mission = ?  ";
+    
+     private String COUNT_FISH_STATION =" select count(*) stationcount"
+             + " from nmdbiotic.fishstation "
+             + "where id_m_mission=?";
         
    
       public List<Mission>  getAllBioticMissions(){
@@ -87,5 +91,9 @@ public class BioticMissionDAO {
         
         return result ;
     } 
+
+    public int getFishStationCount(String id) {
+            return  jdbcTemplate.queryForObject(COUNT_FISH_STATION,new Object[] {id},Integer.class);
+    }
     
 }
