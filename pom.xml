@@ -155,7 +155,7 @@
                         <version>2.3</version>
                         <configuration>
                             <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <outputDirectory>/app/bioticLoader/webapps</outputDirectory>
+                            <outputDirectory>/arc/tap/bioticLoader/webapps</outputDirectory>
                         </configuration>
                     </plugin>
                 </plugins>
