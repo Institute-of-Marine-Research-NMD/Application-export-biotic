@@ -5,8 +5,8 @@ import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import no.imr.nmdapi.client.biotic.export.pojo.FishStation;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.FishStationType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.StringDescriptionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.FishstationType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,7 +21,7 @@ public class FishStationMapper implements RowMapper<FishStation> {
 
     @Override
     public FishStation mapRow(ResultSet rs, int i) throws SQLException {
-        FishStationType fishStation = new FishStationType();
+        FishstationType fishStation = new FishstationType();
         
         fishStation.setSerialno(BigInteger.valueOf(rs.getLong("serial_no")));
         
@@ -48,15 +48,11 @@ public class FishStationMapper implements RowMapper<FishStation> {
             fishStation.setLongitudeend(BigDecimal.valueOf(rs.getDouble("longitude_end")));
           }
         
-        if (rs.getString("system") != null){
-        fishStation.setSystem(newStringDescriptionType(rs.getString("system"), null));
-        }
-        if (rs.getString("area") != null){
-        fishStation.setArea(newStringDescriptionType(rs.getString("area"), null));
-        }
-     
+          fishStation.setSystem(BigInteger.valueOf (rs.getInt("system")));
+          fishStation.setArea(BigInteger.valueOf(rs.getInt("area")));
+        
            if (rs.getString("location")!= null){
-                  fishStation.setLocation(newStringDescriptionType(rs.getString("location"), null));
+                  fishStation.setLocation(rs.getString("location"));
          }
      
         
@@ -64,9 +60,8 @@ public class FishStationMapper implements RowMapper<FishStation> {
         fishStation.setBottomdepthstop(BigDecimal.valueOf(rs.getDouble("bottom_depth_stop")));
         fishStation.setFishingdepthmin(rs.getBigDecimal("fishing_depth_min"));
         fishStation.setFishingdepthmax(rs.getBigDecimal("fishing_depth_max"));
-        if ((rs.getString("equipment_no")!= null) && (!rs.getString("equipment_no").equals(""))){
-               fishStation.setGearno(newStringDescriptionType(rs.getString("equipment_no"), null));
-        }
+        fishStation.setGearno(BigInteger.valueOf(rs.getInt("equipment_no")));
+
         fishStation.setGear(newStringDescriptionType(rs.getString("gear"), null));
         fishStation.setGearcount(BigInteger.valueOf(rs.getInt("equipment_count")));
         
@@ -87,6 +82,12 @@ public class FishStationMapper implements RowMapper<FishStation> {
         if (rs.getString("id_r_udplist_trawl_quality")!=null){
                 fishStation.setTrawlquality(newStringDescriptionType(rs.getString("id_r_udplist_trawl_quality"), null));
         } 
+        
+        if (rs.getString("id_r_udplist_data_quality")!=null){
+                fishStation.setTrawlquality(newStringDescriptionType(rs.getString("id_r_udplist_data_quality"), null));
+        } 
+        
+        
         
         fishStation.setTrawlopening(rs.getBigDecimal("trawl_opening"));
         fishStation.setDoorspread(rs.getBigDecimal("trawl_door_spread"));

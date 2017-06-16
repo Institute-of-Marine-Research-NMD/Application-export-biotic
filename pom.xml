@@ -6,21 +6,23 @@
     <artifactId>bioticLoader</artifactId>
     <version>1.0.10-SNAPSHOT</version>
     <packaging>war</packaging>
-     <name>Application - NMDBiotic loader</name>
+    <name>Application - NMDBiotic loader</name>
 
     
     <repositories>
         <repository>
             <id>nexus-release</id>
             <name>Nexus release repository for IMR</name>
-            <url>http://build.imr.no/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <url>https://build.imr.no/nexus/content/repositories/releases</url>
+           
         </repository>
+     
+        <repository>
+            <id>nexus-snapshot</id>
+            <name>Nexus snapshot repository for IMR</name>
+            <url>https://build.imr.no/nexus/content/repositories/snapshots/</url>
+        </repository>           
+        
         <repository>
             <id>repository.springsource.milestone</id>
             <name>SpringSource Milestone Repository</name>
@@ -42,12 +44,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-               <version>${spring.version}</version>
+            <version>${spring.version}</version>
         </dependency> 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-               <version>${spring.version}</version>
+            <version>${spring.version}</version>
         </dependency> 
         <dependency>
             <groupId>no.imr.framework.logging.slf4j</groupId>
@@ -58,7 +60,7 @@
         <dependency>
             <groupId>no.imr.nmd.commons.biotic.jaxb</groupId>
             <artifactId>commons-biotic-jaxb</artifactId>
-            <version>1.0.5</version>
+            <version>1.1.4-SNAPSHOT</version>
         </dependency>
     
 
@@ -79,10 +81,10 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-spring-javaconfig</artifactId>
-             <version>${camel.version}</version>
+            <version>${camel.version}</version>
             <type>jar</type>
         </dependency>
-          <dependency>
+        <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-quartz</artifactId>
             <version>${camel.version}</version>
@@ -93,21 +95,21 @@
             <version>1.0.0</version>
             <type>jar</type>
         </dependency>
-           <dependency>
+        <dependency>
             <groupId>no.imr.nmdapi.common</groupId>
             <artifactId>nmdapi-exceptions</artifactId>
             <version>0.0.3</version>
-          </dependency>
-          <dependency>
+        </dependency>
+        <dependency>
             <groupId>no.imr.nmdapi.lib</groupId>
             <artifactId>PathGenerator</artifactId>
             <version>0.0.6</version>
         </dependency>
-            <dependency>
-                <groupId>no.imr.nmdapi.dao.file</groupId>
-                <artifactId>nmdapi-file-dao</artifactId>
-                <version>1.1.15</version>
-            </dependency>
+        <dependency>
+            <groupId>no.imr.nmdapi.dao.file</groupId>
+            <artifactId>nmdapi-file-dao</artifactId>
+            <version>1.1.24</version>
+        </dependency>
             
             
         <dependency>
@@ -147,7 +149,7 @@
         <profile>
             <id>localDeploy</id>
             <build>
-                     <finalName>nmdBioticQueue</finalName>
+                <finalName>nmdBioticQueue</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -161,25 +163,25 @@
                 </plugins>
             </build>
         </profile>
-          <profile>
-	<id>default</id>
-	<activation>
-          <activeByDefault>true</activeByDefault>
-        </activation>
-	<build>
-               <finalName>nmdBioticQueue</finalName>
-	  <plugins>
-	    <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-war-plugin</artifactId>
-              <version>2.3</version>
-              <configuration>
-		<failOnMissingWebXml>false</failOnMissingWebXml>
-              </configuration>
-	    </plugin>
-	  </plugins>
-	</build>
-      </profile>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <finalName>nmdBioticQueue</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.3</version>
+                        <configuration>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
         
     
@@ -195,14 +197,14 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-                   <plugin>
+            <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.2</version>
             </plugin>
         </plugins>
     </build>
     
-       <scm>
+    <scm>
         <connection>scm:git:git@github.com:Institute-of-Marine-Research-NMD/Application-export-biotic.git</connection>
         <url>scm:git:git@github.com:Institute-of-Marine-Research-NMD/Application-export-biotic.git</url>
         <developerConnection>scm:git:git@github.com:Institute-of-Marine-Research-NMD/Application-export-biotic.git</developerConnection>

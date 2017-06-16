@@ -3,7 +3,7 @@ package no.imr.nmdapi.client.biotic.export.mapper;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.CopepodedevstageType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CopepodedevstageType;
 import org.springframework.jdbc.core.RowMapper;
 
 /**

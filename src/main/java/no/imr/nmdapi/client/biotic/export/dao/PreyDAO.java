@@ -6,8 +6,8 @@ import no.imr.nmdapi.client.biotic.export.mapper.PreyDevStageMapper;
 import no.imr.nmdapi.client.biotic.export.mapper.PreyLengthMapper;
 import no.imr.nmdapi.client.biotic.export.mapper.PreyMapper;
 import no.imr.nmdapi.client.biotic.export.pojo.Prey;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.CopepodedevstageType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.PreylengthType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CopepodedevstageType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreylengthType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 

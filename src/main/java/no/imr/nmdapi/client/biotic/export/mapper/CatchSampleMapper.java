@@ -5,8 +5,8 @@ import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import no.imr.nmdapi.client.biotic.export.pojo.CatchSample;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.CatchSampleType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.StringDescriptionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CatchsampleType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
@@ -19,7 +19,7 @@ public class CatchSampleMapper implements RowMapper<CatchSample> {
     public CatchSample mapRow(ResultSet rs, int i) throws SQLException {
         CatchSample result = new CatchSample(rs.getString("id"));
         
-        CatchSampleType catchSample = new CatchSampleType();
+        CatchsampleType catchSample = new CatchsampleType();
         
         catchSample.setSamplenumber(BigInteger.valueOf(rs.getLong("sample_no")));
         
@@ -92,7 +92,6 @@ public class CatchSampleMapper implements RowMapper<CatchSample> {
         if ((rs.getString("comment" )!=null) && (rs.getString("comment").trim().length()>0)){
            catchSample.setComment(rs.getString("comment"));
         }
-        
         
         result.setTaxaID(rs.getString("id_r_taxa"));
         

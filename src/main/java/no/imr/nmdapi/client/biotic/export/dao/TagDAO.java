@@ -3,7 +3,7 @@ package no.imr.nmdapi.client.biotic.export.dao;
 import java.util.List;
 import javax.sql.DataSource;
 import no.imr.nmdapi.client.biotic.export.mapper.TagMapper;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.TagType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.TagType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 

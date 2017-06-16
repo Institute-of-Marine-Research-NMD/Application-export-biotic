@@ -64,12 +64,12 @@ public class TaxaDAO {
         return result;
     }
     
-    public  BigInteger getTaxaTSN(String taxaID){
+    public  String getTaxaTSN(String taxaID){
          String sql = "SELECT tsn "
                 + "  FROM nmdreference.taxa ta"
                 + " where   ta.id=?";
 
-         return jdbcTemplate.queryForObject(sql, BigInteger.class,taxaID);
+         return jdbcTemplate.queryForObject(sql, String.class,taxaID);
     }
 
 }

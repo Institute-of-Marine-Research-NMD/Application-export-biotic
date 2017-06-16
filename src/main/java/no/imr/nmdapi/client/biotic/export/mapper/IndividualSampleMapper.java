@@ -5,8 +5,8 @@ import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import no.imr.nmdapi.client.biotic.export.pojo.IndividualSample;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.IndividualType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.StringDescriptionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.IndividualType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
@@ -46,7 +46,7 @@ public class IndividualSampleMapper implements RowMapper<IndividualSample> {
         }
          
        if (rs.getLong("vertebrae") != 0){
-           individualSample.setVertebrae(newStringDescriptionType(rs.getString("vertebrae"),null));
+           individualSample.setVertebrae(BigInteger.valueOf(rs.getInt("vertebrae")));
       }
          
         if (rs.getString("id_r_udplist_length_type")!=null){
@@ -86,7 +86,8 @@ public class IndividualSampleMapper implements RowMapper<IndividualSample> {
        if ( (rs.getString("comment")!=null) && (!rs.getString("comment").isEmpty()))  {
                individualSample.setComment(rs.getString("comment"));
        }
-        
+       
+       
         result.setType(individualSample);
         return result;
     }

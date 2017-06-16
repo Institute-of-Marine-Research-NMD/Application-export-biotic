@@ -4,11 +4,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import no.imr.nmdapi.client.biotic.export.pojo.IndividualSample;
 import no.imr.nmdapi.client.biotic.export.pojo.Prey;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.IndividualType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.PreyType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.StringDescriptionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreyType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
@@ -29,9 +27,9 @@ public class PreyMapper implements RowMapper<Prey> {
         if (rs.getBigDecimal("total_weight") != null ){
             
         if (rs.getDouble("total_weight") != 0){
-             preyType.setTotalweight(BigDecimal.valueOf(rs.getDouble("total_weight")).toPlainString());
+             preyType.setTotalweight(BigDecimal.valueOf(rs.getDouble("total_weight")));
            } else {
-                 preyType.setTotalweight("0.0");
+                 preyType.setTotalweight(new BigDecimal(0.0));
            }
         }
         
@@ -63,6 +61,7 @@ public class PreyMapper implements RowMapper<Prey> {
          result.setTaxaID(rs.getString("id_r_taxa"));
         }
    
+        
         
         result.setType(preyType);
         return result;

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.PreylengthType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreylengthType;
 import org.springframework.jdbc.core.RowMapper;
 
 /**

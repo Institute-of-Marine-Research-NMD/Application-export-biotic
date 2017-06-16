@@ -1,6 +1,6 @@
 package no.imr.nmdapi.client.biotic.export.pojo;
 
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.CatchSampleType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CatchsampleType;
 
 /**
  *
@@ -23,7 +23,7 @@ public class CatchSample {
     }
     
     
-    private CatchSampleType type;
+    private CatchsampleType type;
 
     public CatchSample(String id) {
         this.id = id;
@@ -41,13 +41,13 @@ public class CatchSample {
         return taxaID;
     }
 
-    public void setType(CatchSampleType type) {
+    public void setType(CatchsampleType type) {
         this.type = type;
     }
 
     
     
-    public CatchSampleType getType() {
+    public CatchsampleType getType() {
         return type;
     }
     

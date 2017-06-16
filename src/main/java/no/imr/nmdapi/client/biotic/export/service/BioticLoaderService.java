@@ -18,7 +18,7 @@ import no.imr.nmd.commons.dataset.jaxb.QualityEnum;
 import no.imr.nmdapi.client.biotic.export.BioticGenerator;
 import no.imr.nmdapi.client.biotic.export.dao.BioticMissionDAO;
 import no.imr.nmdapi.client.biotic.export.dao.PlatformDAO;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.MissionsType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.MissionsType;
 import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import no.imr.nmdapi.client.biotic.export.pojo.Mission;
 import no.imr.nmdapi.exceptions.CantWriteFileException;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.MissionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.MissionType;
 import no.imr.nmdapi.lib.nmdapipathgenerator.PathGenerator;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -81,8 +81,9 @@ public class BioticLoaderService {
         String platformPath = pathGenerator.createPlatformURICode(platformCodes);
         
         File destinationFile = pathGenerator.generatePath(configuration.getString("file.location"), bioticMission.getMissiontypename(),
-                bioticMission.getYear(), platformPath, delivery, "biotic");
+                bioticMission.getYear().toString(), platformPath, delivery, "biotic");
        
+        
         writeToFile(bioticMission,destinationFile,delivery);
         
         ex.getOut().setHeader("imr:datatype", DataTypeEnum.BIOTIC.toString());
@@ -94,7 +95,7 @@ public class BioticLoaderService {
         ex.getOut().setHeader("imr:updated", getXMLGregorianCalendar().toString());
         ex.getOut().setHeader("imr:description", "");
         ex.getOut().setHeader("imr:datasetscontainer", bioticMission.getMissiontypename().
-                concat(DATASET_CONTAINER_DELIMITER).concat(bioticMission.getYear()).
+                concat(DATASET_CONTAINER_DELIMITER).concat(bioticMission.getYear().toString()).
                 concat(DATASET_CONTAINER_DELIMITER).concat(platformPath).
                 concat(DATASET_CONTAINER_DELIMITER).concat(delivery));
         ex.getOut().setBody("Updated cruise: "+delivery);
@@ -110,7 +111,7 @@ public class BioticLoaderService {
         File tempFile = new File(FileUtils.getTempDirectory().getAbsolutePath().concat(File.separator).concat(tempFilename));
         
         try {
-            JAXBContext ctx = JAXBContext.newInstance("no.imr.nmdapi.generic.nmdbiotic.domain.v1");
+            JAXBContext ctx = JAXBContext.newInstance("no.imr.nmdapi.generic.nmdbiotic.domain.v1_4");
             Marshaller marshaller = ctx.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");

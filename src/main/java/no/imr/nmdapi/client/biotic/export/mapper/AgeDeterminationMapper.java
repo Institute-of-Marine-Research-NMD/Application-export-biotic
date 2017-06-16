@@ -4,8 +4,8 @@ import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import no.imr.nmdapi.client.biotic.export.pojo.AgeDetermination;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.AgeDeterminationType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.StringDescriptionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.AgedeterminationType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
@@ -18,7 +18,7 @@ public class AgeDeterminationMapper implements RowMapper<AgeDetermination> {
     public  AgeDetermination mapRow(ResultSet rs, int i) throws SQLException {
          AgeDetermination result = new  AgeDetermination(rs.getString("id"));
         
-        AgeDeterminationType  ageDeterminationType = new  AgeDeterminationType();
+        AgedeterminationType  ageDeterminationType = new  AgedeterminationType();
 
       //  ageDeterminationType.setNo(BigInteger.valueOf(rs.getLong("part_no")));
         if (rs.getString("age")!=null){
@@ -84,7 +84,7 @@ public class AgeDeterminationMapper implements RowMapper<AgeDetermination> {
         }
 
        if (rs.getString("calibration")!=null){
-           ageDeterminationType.setCalibration(newStringDescriptionType(rs.getString("calibration"), null));
+           ageDeterminationType.setCalibration(BigInteger.valueOf(rs.getInt("calibration")));
        }
         
         result.setType(ageDeterminationType);

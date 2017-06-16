@@ -62,13 +62,13 @@ public class AllUpdatedBioticMissions {
             String platformPath = pathGenerator.createPlatformURICode(platformCodes);
             
             File dataFile = pathGenerator.generatePath(configuration.getString("file.location"),
-                    mission.getMissionType(), mission.getStartYear(), platformPath, cruiseCode, "biotic");
+                    mission.getMissionType(), mission.getStartYearString(), platformPath, cruiseCode, "biotic");
             
             LOG.debug("Check dataset:" +mission.getId()+" "+dataFile.toString());
     
             if (dataFile.exists()) {
                 DatasetType dataset = nmdDatasetDao.getDatasetByName(DataTypeEnum.BIOTIC, "data", mission.getMissionType(),
-                        mission.getStartYear(), platformPath, cruiseCode);
+                        mission.getStartYearString(), platformPath, cruiseCode);
                 if (dataset != null) {
                     Date lastDBUpdate = bioticMissionDAO.getMaxMissionLog(mission.getId());
                     

@@ -17,10 +17,10 @@ public class TaxaNameMapper implements RowMapper<Taxa> {
         taxa.setTsn(rs.getString("tsn"));
         if (rs.getString("aphiaid") !=null)
         {
-        taxa.setAphia(BigInteger.valueOf(rs.getLong("aphiaid")));
+        taxa.setAphia(rs.getString("aphiaid"));
         }
         taxa.setName(rs.getString("name"));
-        taxa.setName(rs.getString("name"));
+     
         taxa.setLanguage(rs.getString("lang"));
 
         return taxa;

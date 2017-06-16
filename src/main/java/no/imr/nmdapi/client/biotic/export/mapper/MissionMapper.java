@@ -18,7 +18,7 @@ public class MissionMapper implements RowMapper<Mission> {
         m.setMissionNumber(rs.getInt("missionnumber"));
         m.setStartTime(rs.getString("start_time"));
         m.setStopTime(rs.getString("stop_time"));
-        m.setStartYear(rs.getString("startyear"));
+        m.setStartYear(rs.getInt("startyear"));
         m.setPurpose(rs.getString("purpose"));
         m.setMissionTypeCode(rs.getString("missiontypecode"));
         m.setMissionType(rs.getString("missiontype"));

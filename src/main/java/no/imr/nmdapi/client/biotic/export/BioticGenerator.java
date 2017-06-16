@@ -23,16 +23,16 @@ import no.imr.nmdapi.client.biotic.export.pojo.FishStation;
 import no.imr.nmdapi.client.biotic.export.pojo.IndividualSample;
 import no.imr.nmdapi.client.biotic.export.pojo.Prey;
 
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.AgeDeterminationType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.CatchSampleType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.CopepodedevstageType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.FishStationType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.IndividualType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.MissionType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.PreyType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.PreylengthType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.StringDescriptionType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.TagType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.AgedeterminationType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CatchsampleType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CopepodedevstageType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.FishstationType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.IndividualType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.MissionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreyType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreylengthType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.TagType;
 
 import org.slf4j.LoggerFactory;
 
@@ -81,11 +81,11 @@ public class BioticGenerator  {
      
       
         MissionType biotic = new MissionType();
-        biotic.setMissionnumber(String.valueOf(mission.getMissionNumber()));
+        biotic.setMissionnumber(BigInteger.valueOf(mission.getMissionNumber()));
         biotic.setMissiontype(mission.getMissionTypeCode());
         biotic.setMissiontypename(mission.getMissionType());
-        biotic.setYear(mission.getStartYear());
-
+        biotic.setYear(BigInteger.valueOf(mission.getStartYear()));
+        
         
         Map<String, String> platformCodes = platformDAO.getCruisePlatformCodes(mission.getId());
         
@@ -163,7 +163,9 @@ public class BioticGenerator  {
                             if (prey.getWeighUnittID() != null) {
                                 String weightRes = udpDAO.getName(prey.getWeighUnittID());
                                 if ((weightRes != null)  && (!weightRes.isEmpty())){
-                                    prey.getType().setWeightresolution( new BigInteger(weightRes));
+                                   StringDescriptionType weigthResType = new StringDescriptionType();
+                                   weigthResType.setValue(weightRes);
+                                    prey.getType().setWeightresolution(new StringDescriptionType());
                                 }
                              }
                             addPreyUDPLookups(prey.getType());
@@ -191,37 +193,38 @@ public class BioticGenerator  {
     }
 
     
-    private void addFishStationUDPLookups(FishStationType fishStation) {
-        mapUDPLookup(fishStation.getStationtype());
-        mapUDPLookup(fishStation.getGearcondition());
-        mapUDPLookup(fishStation.getTrawlquality());
+    private void addFishStationUDPLookups(FishstationType fishStation) {
+        fishStation.setStationtype(getUDPLookup(fishStation.getStationtype()));
+        fishStation.setGearcondition(getUDPLookup(fishStation.getGearcondition()));
+        fishStation.setTrawlquality(getUDPLookup(fishStation.getTrawlquality()));
+        fishStation.setDataquality(getUDPLookup(fishStation.getDataquality()));
+                
     }
 
-    private void addCatchSampleUDILookups(CatchSampleType catchSample) {
-        mapUDPLookup(catchSample.getSampletype());
-        mapUDPLookup(catchSample.getConservation());
-        mapUDPLookup(catchSample.getGroup());
-        mapUDPLookup(catchSample.getLengthmeasurement());
-        mapUDPLookup(catchSample.getProducttype());
-        mapUDPLookup(catchSample.getParasite());
-        mapUDPLookup(catchSample.getGenetics());
+    private void addCatchSampleUDILookups(CatchsampleType catchSample) {
+        catchSample.setSampletype(getUDPLookup(catchSample.getSampletype()));
+        catchSample.setConservation(getUDPLookup(catchSample.getConservation()));
+        catchSample.setGroup(getUDPLookup(catchSample.getGroup()));
+        catchSample.setLengthmeasurement(getUDPLookup(catchSample.getLengthmeasurement()));
+        catchSample.setProducttype(getUDPLookup(catchSample.getProducttype()));
+        catchSample.setParasite(getUDPLookup(catchSample.getParasite()));
+        catchSample.setGenetics(getUDPLookup(catchSample.getGenetics()));
         
-        mapUDPLookup(catchSample.getSampleproducttype());
-        mapUDPLookup(catchSample.getStomach());
-        mapUDPLookup(catchSample.getAgingstructure());
+        catchSample.setSampleproducttype(getUDPLookup(catchSample.getSampleproducttype()));
+        catchSample.setStomach(getUDPLookup(catchSample.getStomach()));
+        catchSample.setAgingstructure(getUDPLookup(catchSample.getAgingstructure()));
     }
 
     private void addIndividualSampleUDPLookups(IndividualType individualSample) {
-        mapUDPLookup(individualSample.getLengthunit());
-        mapUDPLookup(individualSample.getSex());
-        mapUDPLookup(individualSample.getStage());
-        mapUDPLookup(individualSample.getDigestion());
-        mapUDPLookup(individualSample.getFat());
-        mapUDPLookup(individualSample.getLiver());
-        
-        mapUDPLookup(individualSample.getStomachfillfield());
-        mapUDPLookup(individualSample.getLiverparasite());
-        mapUDPLookup(individualSample.getProducttype());
+        individualSample.setLengthunit(getUDPLookup(individualSample.getLengthunit()));
+        individualSample.setSex(getUDPLookup(individualSample.getSex()));
+        individualSample.setStage(getUDPLookup(individualSample.getStage()));
+        individualSample.setDigestion(getUDPLookup(individualSample.getDigestion()));
+        individualSample.setFat(getUDPLookup(individualSample.getFat()));
+        individualSample.setLiver(getUDPLookup(individualSample.getLiver()));
+        individualSample.setStomachfillfield(getUDPLookup(individualSample.getStomachfillfield()));
+        individualSample.setLiverparasite(getUDPLookup(individualSample.getLiverparasite()));
+        individualSample.setProducttype(getUDPLookup(individualSample.getProducttype()));
         //special case to ensure no blank elements are added if blank udp values are found
 //        if ( (individualSample.getProducttype()!= null) &&  (individualSample.getProducttype().getValue().isEmpty())) {
 //            individualSample.setProducttype(null);
@@ -229,35 +232,33 @@ public class BioticGenerator  {
      }
     
      private void addPreyUDPLookups(PreyType prey) {
-        mapUDPLookup(prey.getDigestion());
-        mapUDPLookup(prey.getLengthmeasurement());
-        mapUDPLookup(prey.getInterval());
-         mapUDPLookup(prey.getDevstage());
+        prey.setDigestion(getUDPLookup(prey.getDigestion()));
+        prey.setLengthmeasurement(getUDPLookup(prey.getLengthmeasurement()));
+        prey.setInterval(getUDPLookup(prey.getInterval()));
+        prey.setDevstage(getUDPLookup(prey.getDevstage()));
          
     }
     
-    private void addAgeDeterminationUDPLookups(AgeDeterminationType ageDetermination) {
-        mapUDPLookup(ageDetermination.getReadability());
-
-        mapUDPLookup(ageDetermination.getOtolithcentre());
-        mapUDPLookup(ageDetermination.getOtolithedge());
-        mapUDPLookup(ageDetermination.getOtolithtype());
+    private void addAgeDeterminationUDPLookups(AgedeterminationType ageDetermination) {
+        ageDetermination.setReadability(getUDPLookup(ageDetermination.getReadability()));
+        ageDetermination.setOtolithcentre(getUDPLookup(ageDetermination.getOtolithcentre()));
+        ageDetermination.setOtolithedge(getUDPLookup(ageDetermination.getOtolithedge()));
+        ageDetermination.setOtolithtype(getUDPLookup(ageDetermination.getOtolithtype()));
 
     }
     
 
-    private void mapUDPLookup(StringDescriptionType type) {
+    private StringDescriptionType getUDPLookup(StringDescriptionType type) {
         String udpName;
+        StringDescriptionType result = null;
         if (type != null) {
             udpName = udpDAO.getName(type.getValue());
             if (udpName.length()>0){
             type.setValue(udpName);
-            } else {
-                type.setValue(null);
+            result = type;
             }
-            
         }
-
+        return result;
     }
 
     private void addAgeDetermination(IndividualSample individualSample) {
@@ -276,8 +277,8 @@ public class BioticGenerator  {
         List<TagType> tagList = tagDAO.getTag(individualSample.getId());
         if (tagList.size() >0) {
             //TODO Can there ever be more than one tag?
-            individualSample.getType().setTag(tagList.get(0));
-           }
+            individualSample.getType().getTag().addAll(tagList);
+            }
      }
 
 
@@ -306,20 +307,17 @@ public class BioticGenerator  {
             //TODO Check if single property value can apear more than once
               switch (udpValue.getPropertyName()) {
                   case "sopp_hjerte":
-                      mapUDPLookup(stringDesc);
-                      individualSample.getType().setFungusheart(stringDesc);
+                      individualSample.getType().setFungusheart(getUDPLookup(stringDesc));
                       break;
                   case "sopp_ytre":
-                      mapUDPLookup(stringDesc);
-                      individualSample.getType().setFungusouter(stringDesc);
+                      individualSample.getType().setFungusouter(getUDPLookup(stringDesc));
                       break;
                   case "specialstage":
-                       mapUDPLookup(stringDesc);
-                       individualSample.getType().setSpecialstage(stringDesc);
+                       
+                       individualSample.getType().setSpecialstage(getUDPLookup(stringDesc));
                       break;
                   case "gjellesvull":
-                       mapUDPLookup(stringDesc);
-                      individualSample.getType().setSwollengills(stringDesc);
+                      individualSample.getType().setSwollengills(getUDPLookup(stringDesc));
                       break;
                   case "carapacewidth":
                       individualSample.getType().setCarapacewidth(BigDecimal.valueOf(udpValue.getValueDouble()));

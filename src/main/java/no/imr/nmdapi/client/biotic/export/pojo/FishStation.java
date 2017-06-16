@@ -1,6 +1,6 @@
 package no.imr.nmdapi.client.biotic.export.pojo;
 
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.FishStationType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.FishstationType;
 
 /**
  *
@@ -9,10 +9,10 @@ import no.imr.nmdapi.generic.nmdbiotic.domain.v1.FishStationType;
 public class FishStation {
   
     private String  id;
-    private FishStationType type;
+    private FishstationType type;
 
     
-    public FishStation(String id, FishStationType type) {
+    public FishStation(String id, FishstationType type) {
         this.id = id;
         this.type = type;
     }
@@ -21,7 +21,7 @@ public class FishStation {
     public String getId() {
         return id;
     }
-    public FishStationType getType() {
+    public FishstationType getType() {
         return type;
     }
 

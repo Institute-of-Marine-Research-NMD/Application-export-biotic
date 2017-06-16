@@ -1,6 +1,6 @@
 package no.imr.nmdapi.client.biotic.export.pojo;
 
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.IndividualType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.IndividualType;
 
 /**
  *

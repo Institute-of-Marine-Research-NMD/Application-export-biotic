@@ -41,8 +41,8 @@ public class FishStationDAO {
             + "location,"
             + "bottom_depth_start,"
             + "bottom_depth_stop,"
-            + "round(cast(fishing_depth_max as numeric),1) as fishing_depth_max,"
-            + "round(cast(fishing_depth_min as numeric),1) as fishing_depth_min,"
+            + "round(cast(fishing_depth_max as numeric),9) as fishing_depth_max,"
+            + "round(cast(fishing_depth_min as numeric),9) as fishing_depth_min,"
             + "equipment_no,"  //Gear no
             + " e.code as gear," //Gear
             + "equipment_count," // gearcount
@@ -54,8 +54,9 @@ public class FishStationDAO {
            /* + "distance,"*/
             + "id_r_udplist_gearcondition,"  // Gear condition
             + "id_r_udplist_trawl_quality,"
-            + "round(cast(trawl_opening as numeric),1) as trawl_opening,"
-            + "round(cast(trawl_door_spread as numeric),1) as trawl_door_spread,"
+            + "id_r_udplist_data_quality,"
+            + "round(cast(trawl_opening as numeric),9) as trawl_opening,"  //Based on feedback email (1/6/2017) from Asmund
+            + "round(cast(trawl_door_spread as numeric),9) as trawl_door_spread,"
             + "wire_length, comment"
             + " FROM nmdbiotic.fishstation f,"
             + "nmdreference.equipment e,"

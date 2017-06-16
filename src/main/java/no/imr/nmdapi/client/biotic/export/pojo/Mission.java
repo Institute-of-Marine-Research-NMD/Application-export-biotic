@@ -10,7 +10,7 @@ public class Mission {
     Integer  missionNumber;
     String startTime;
     String stopTime;
-    String startYear;
+    int startYear;
     String purpose;
     String missionTypeCode;
     String missionType;
@@ -47,11 +47,15 @@ public class Mission {
         this.stopTime = stopTime;
     }
 
-    public String getStartYear() {
+    public int getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(String startYear) {
+     public String getStartYearString() {
+        return String.valueOf(startYear);
+    }
+    
+    public void setStartYear(int startYear) {
         this.startYear = startYear;
     }
 

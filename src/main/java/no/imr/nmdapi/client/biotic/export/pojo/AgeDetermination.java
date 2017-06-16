@@ -1,7 +1,7 @@
 package no.imr.nmdapi.client.biotic.export.pojo;
 
 
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1.AgeDeterminationType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.AgedeterminationType;
 
 /**
  *
@@ -11,13 +11,13 @@ public class AgeDetermination {
 
    private String id;
  
-   private AgeDeterminationType type;
+   private AgedeterminationType type;
 
-    public AgeDeterminationType getType() {
+    public AgedeterminationType getType() {
         return type;
     }
 
-    public void setType(AgeDeterminationType type) {
+    public void setType(AgedeterminationType type) {
         this.type = type;
     }
 

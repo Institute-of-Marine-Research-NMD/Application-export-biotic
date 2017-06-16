@@ -1,7 +1,5 @@
 package no.imr.nmdapi.client.biotic.export.pojo;
 
-import java.math.BigInteger;
-
 /**
  *
  * @author Terry Hannant <a5119>
@@ -9,7 +7,7 @@ import java.math.BigInteger;
 public class Taxa {
     
     private String tsn;
-    private BigInteger aphia;
+    private String aphia;
     private String name;
     private String language;
 
@@ -21,11 +19,11 @@ public class Taxa {
         this.tsn = tsn;
     }
 
-    public BigInteger getAphia() {
+    public String getAphia() {
         return aphia;
     }
 
-    public void setAphia(BigInteger aphia) {
+    public void setAphia(String aphia) {
         this.aphia = aphia;
     }
 
