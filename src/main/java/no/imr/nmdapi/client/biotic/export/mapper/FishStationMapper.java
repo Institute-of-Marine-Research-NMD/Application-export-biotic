@@ -99,7 +99,10 @@ public class FishStationMapper implements RowMapper<FishStation> {
         {
         fishStation.setComment(rs.getString("comment"));
         }
-        
+        fishStation.setFixedstation(newStringDescriptionType(rs.getString("fixedcoastalstation"), null));
+        fishStation.setSoaktime(BigDecimal.valueOf(rs.getDouble("soaktime")));
+        fishStation.setTripno(BigInteger.valueOf(rs.getInt("tripno")));
+
         return new FishStation(rs.getString("id") ,fishStation);
     }
 

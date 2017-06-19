@@ -39,7 +39,9 @@ public class AgeDeterminationDAO {
             + "growth_zone_7,"
             + "growth_zone_8,"
             + "growth_zone_9,"
-            + " growth_zones_total "
+            + " growth_zones_total, "
+            +" coastal_annuli,"
+            +" oceanic_annuli"
             + " FROM nmdbiotic.age_determination a"
              + " where  a.id_individual = ?";
     
