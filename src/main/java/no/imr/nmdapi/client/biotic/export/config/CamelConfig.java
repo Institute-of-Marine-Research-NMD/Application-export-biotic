@@ -15,8 +15,8 @@ import org.springframework.beans.factory.InitializingBean;
  * @author Terry Hannant <a5119>
  */
 @Configuration
-public class CamelConfig extends  CamelConfiguration  implements InitializingBean {
-    
+public class CamelConfig extends CamelConfiguration implements InitializingBean {
+
     @Autowired
     private GenerateAll generateAllRoute;
 
@@ -35,7 +35,5 @@ public class CamelConfig extends  CamelConfiguration  implements InitializingBea
     public void afterPropertiesSet() throws Exception {
         // no properties loaded so not used
     }
-  
-  
-    
+
 }

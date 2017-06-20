@@ -7,7 +7,7 @@ package no.imr.nmdapi.client.biotic.export.pojo;
 public class Mission {
 
     String id;
-    Integer  missionNumber;
+    Integer missionNumber;
     String startTime;
     String stopTime;
     int startYear;
@@ -51,10 +51,10 @@ public class Mission {
         return startYear;
     }
 
-     public String getStartYearString() {
+    public String getStartYearString() {
         return String.valueOf(startYear);
     }
-    
+
     public void setStartYear(int startYear) {
         this.startYear = startYear;
     }
@@ -83,6 +83,4 @@ public class Mission {
         this.missionType = missionType;
     }
 
-    
-    
 }

@@ -13,23 +13,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class TagDAO {
 
- private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-    
-     
+
     private String baseQueryString = " select m.id as id,"
             + "mark_number,"
             + "id_r_udplist_markingtype"
             + " FROM nmdbiotic.marking m"
-             + " where m .id_individual = ?";
-    
-     public List<TagType> getTag(String individualID)
-    {
-        return jdbcTemplate.query(baseQueryString,new TagMapper(),individualID);
+            + " where m .id_individual = ?";
+
+    public List<TagType> getTag(String individualID) {
+        return jdbcTemplate.query(baseQueryString, new TagMapper(), individualID);
     }
 
 }

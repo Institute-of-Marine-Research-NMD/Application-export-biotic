@@ -14,17 +14,15 @@ import org.springframework.jdbc.core.RowMapper;
 public class PreyLengthMapper implements RowMapper<PreylengthType> {
 
     @Override
-    public  PreylengthType mapRow(ResultSet rs, int i) throws SQLException {
-         PreylengthType result = new  PreylengthType();
-        
+    public PreylengthType mapRow(ResultSet rs, int i) throws SQLException {
+        PreylengthType result = new PreylengthType();
+
         result.setLength(BigDecimal.valueOf(rs.getDouble("length")));
-        
-            
-        if (rs.getLong("count") != 0){
-             result.setCount(BigInteger.valueOf(rs.getLong("count")));
+
+        if (rs.getLong("count") != 0) {
+            result.setCount(BigInteger.valueOf(rs.getLong("count")));
         }
         return result;
     }
 
-    
 }

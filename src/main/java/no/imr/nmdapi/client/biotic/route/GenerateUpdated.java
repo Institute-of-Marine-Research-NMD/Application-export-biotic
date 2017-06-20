@@ -24,7 +24,7 @@ public class GenerateUpdated extends RouteBuilder {
                 process(new ExceptionProcessor(configuration.getString("application.name"))).
                 to("jms:queue:".concat(configuration.getString("queue.outgoing.criticalFailure")));
 
-             from("quartz://cacheRefresh?cron=" + UnsafeUriCharactersEncoder.encode(configuration.getString("cron.activation.time")))
+        from("quartz://cacheRefresh?cron=" + UnsafeUriCharactersEncoder.encode(configuration.getString("cron.activation.time")))
                 .from("timer://runOnce?repeatCount=1&delay=5000")
                 .to("getAllUpdatedBioticMissions")
                 .split(body())
@@ -34,6 +34,5 @@ public class GenerateUpdated extends RouteBuilder {
                         "jms:queue:".concat(configuration.getString("queue.outgoing.success"))
                 );
     }
-
 
 }

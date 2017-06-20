@@ -1,6 +1,5 @@
 package no.imr.nmdapi.client.biotic.export.pojo;
 
-
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreyType;
 
 /**
@@ -9,10 +8,10 @@ import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreyType;
  */
 public class Prey {
 
-   private String id;
-   private String individualID;
-   private String taxaID;
-   private String weighUnittID;
+    private String id;
+    private String individualID;
+    private String taxaID;
+    private String weighUnittID;
 
     public String getWeighUnittID() {
         return weighUnittID;
@@ -21,18 +20,16 @@ public class Prey {
     public void setWeighUnittID(String weighUnittID) {
         this.weighUnittID = weighUnittID;
     }
-   
-    
-    public void setindividualID(String individualID){
+
+    public void setindividualID(String individualID) {
         this.individualID = individualID;
     }
 
     public String getIndividualID() {
         return individualID;
     }
-            
-   
-   private PreyType type;
+
+    private PreyType type;
 
     public PreyType getType() {
         return type;
@@ -57,9 +54,5 @@ public class Prey {
     public String getId() {
         return id;
     }
-   
-    
-    
-   
-    
+
 }

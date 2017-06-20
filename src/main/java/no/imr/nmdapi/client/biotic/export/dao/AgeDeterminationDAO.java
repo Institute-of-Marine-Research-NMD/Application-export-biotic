@@ -13,14 +13,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class AgeDeterminationDAO {
 
- private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-    
-     
+
     private String baseQueryString = " select a.id as id,"
             + "age,"
             + "spawning_age,"
@@ -40,14 +39,13 @@ public class AgeDeterminationDAO {
             + "growth_zone_8,"
             + "growth_zone_9,"
             + " growth_zones_total, "
-            +" coastal_annuli,"
-            +" oceanic_annuli"
+            + " coastal_annuli,"
+            + " oceanic_annuli"
             + " FROM nmdbiotic.age_determination a"
-             + " where  a.id_individual = ?";
-    
-     public List<AgeDetermination> getAgeDetermination(String individualID)
-    {
-        return jdbcTemplate.query(baseQueryString, new AgeDeterminationMapper(),individualID);
+            + " where  a.id_individual = ?";
+
+    public List<AgeDetermination> getAgeDetermination(String individualID) {
+        return jdbcTemplate.query(baseQueryString, new AgeDeterminationMapper(), individualID);
     }
 
 }

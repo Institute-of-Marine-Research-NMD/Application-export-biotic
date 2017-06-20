@@ -5,7 +5,7 @@ package no.imr.nmdapi.client.biotic.export.pojo;
  * @author Terry Hannant <a5119>
  */
 public class Taxa {
-    
+
     private String tsn;
     private String aphia;
     private String name;
@@ -42,10 +42,5 @@ public class Taxa {
     public void setLanguage(String language) {
         this.language = language;
     }
-
-     
-    
-    
-    
 
 }

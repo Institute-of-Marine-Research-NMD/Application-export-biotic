@@ -1,7 +1,6 @@
 package no.imr.nmdapi.client.biotic.export;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -33,8 +32,5 @@ public class XMLTypeConverter {
         return result;
 
     }
-   
-    
-    
 
 }

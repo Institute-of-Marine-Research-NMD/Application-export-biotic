@@ -40,52 +40,49 @@ import org.springframework.context.annotation.Bean;
 public class BioticLoaderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(BioticLoaderService.class);
- 
+
     private static final String DATASET_CONTAINER_DELIMITER = "/";
-        
+
     @Autowired
     @Qualifier("configuration")
-    private  org.apache.commons.configuration.Configuration configuration;
-    
-    
+    private org.apache.commons.configuration.Configuration configuration;
+
     @Autowired
     BioticMissionDAO bioticMissionDAO;
 
     @Autowired
     PlatformDAO platformDAO;
-    
+
     @Autowired
     BioticGenerator bioticGenerator;
-  
-    private  PathGenerator pathGenerator = new PathGenerator();
-    
+
+    private PathGenerator pathGenerator = new PathGenerator();
+
     public void generatorBioticToFile(Exchange ex) throws PropertyException, JAXBException {
-    
-        
-        String missionID=ex.getIn().getBody(String.class);
+
+        String missionID = ex.getIn().getBody(String.class);
         String delivery;
-        LOG.debug("Processsing biotic for  mission :"+missionID);
-        
-        Mission mission =  bioticMissionDAO.getMission(missionID);
-        String cruiseCode = bioticMissionDAO.getCruiseCode(missionID); 
+        LOG.debug("Processsing biotic for  mission :" + missionID);
 
-        MissionType bioticMission = bioticGenerator.generate(mission,cruiseCode);
+        Mission mission = bioticMissionDAO.getMission(missionID);
+        String cruiseCode = bioticMissionDAO.getCruiseCode(missionID);
 
-        if ( (cruiseCode == null )  || (cruiseCode.trim().length()==0 ) )  {
-          delivery = bioticMissionDAO.getDelivery(missionID);
+        MissionType bioticMission = bioticGenerator.generate(mission, cruiseCode);
+
+        if ((cruiseCode == null) || (cruiseCode.trim().length() == 0)) {
+            delivery = bioticMissionDAO.getDelivery(missionID);
         } else {
-           delivery = cruiseCode;
+            delivery = cruiseCode;
         }
-        
+
         Map<String, String> platformCodes = platformDAO.getCruisePlatformCodes(missionID);
         String platformPath = pathGenerator.createPlatformURICode(platformCodes);
-        
+
         File destinationFile = pathGenerator.generatePath(configuration.getString("file.location"), bioticMission.getMissiontypename(),
                 bioticMission.getYear().toString(), platformPath, delivery, "biotic");
-       
-        
-        writeToFile(bioticMission,destinationFile,delivery);
-        
+
+        writeToFile(bioticMission, destinationFile, delivery);
+
         ex.getOut().setHeader("imr:datatype", DataTypeEnum.BIOTIC.toString());
         ex.getOut().setHeader("imr:datasetname", "data");
         ex.getOut().setHeader("imr:owner", "imr");
@@ -98,50 +95,47 @@ public class BioticLoaderService {
                 concat(DATASET_CONTAINER_DELIMITER).concat(bioticMission.getYear().toString()).
                 concat(DATASET_CONTAINER_DELIMITER).concat(platformPath).
                 concat(DATASET_CONTAINER_DELIMITER).concat(delivery));
-        ex.getOut().setBody("Updated cruise: "+delivery);
-        
-        LOG.debug("Generated biotic for cruise:"+delivery+" to "+destinationFile);
-        
-    } 
+        ex.getOut().setBody("Updated cruise: " + delivery);
 
-    private void writeToFile(MissionType bioticMission,File destinationFile,String tempFilename) {
+        LOG.debug("Generated biotic for cruise:" + delivery + " to " + destinationFile);
+
+    }
+
+    private void writeToFile(MissionType bioticMission, File destinationFile, String tempFilename) {
         MissionsType rootElement = new MissionsType();
         rootElement.getMission().add(bioticMission);
-                 
+
         File tempFile = new File(FileUtils.getTempDirectory().getAbsolutePath().concat(File.separator).concat(tempFilename));
-        
+
         try {
             JAXBContext ctx = JAXBContext.newInstance("no.imr.nmdapi.generic.nmdbiotic.domain.v1_4");
             Marshaller marshaller = ctx.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-            
-            marshaller.marshal(rootElement,tempFile);
+
+            marshaller.marshal(rootElement, tempFile);
             FileUtils.copyFile(tempFile, destinationFile);
             tempFile.delete();
-            
+
         } catch (JAXBException jex) {
             LOG.error("Unable to marshall file for biotic dataset", jex);
             throw new CantWriteFileException("Unable to marshall file for biotic dataset", tempFile, jex);
         } catch (IOException ex) {
-             LOG.error("Unable to copy biotic file to destination", ex);
-            throw new CantWriteFileException("Unable to copy biotic file to destination",destinationFile, ex);
+            LOG.error("Unable to copy biotic file to destination", ex);
+            throw new CantWriteFileException("Unable to copy biotic file to destination", destinationFile, ex);
         }
-        
+
     }
-    
-     private XMLGregorianCalendar getXMLGregorianCalendar() {
+
+    private XMLGregorianCalendar getXMLGregorianCalendar() {
         try {
             GregorianCalendar c = new GregorianCalendar();
             c.setTime(Calendar.getInstance().getTime());
             return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
         } catch (DatatypeConfigurationException ex) {
             LOG.error("Unable to create xml gregorian calendar", ex);
-            throw new ProcessingException("Unable to create xml calendar",ex);
+            throw new ProcessingException("Unable to create xml calendar", ex);
         }
     }
-            
-    
-    
-    
+
 }

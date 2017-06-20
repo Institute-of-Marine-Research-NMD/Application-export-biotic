@@ -1,20 +1,17 @@
 package no.imr.nmdapi.client.biotic.export.pojo;
 
-import java.math.BigDecimal;
-
 /**
  *
  * @author Terry Hannant <a5119>
  */
 public class UdpValue {
-    
+
     private String propertyName;
     private String valueText;
-    private String valueUDPListID; 
+    private String valueUDPListID;
     private double valueDouble;
     private long valueInteger;
-    
-    
+
     public String getPropertyName() {
         return propertyName;
     }
@@ -54,8 +51,5 @@ public class UdpValue {
     public void setValueInteger(long valueInteger) {
         this.valueInteger = valueInteger;
     }
-
-    
-    
 
 }

@@ -15,33 +15,30 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ComponentConfig {
-    
-     private static final String CATALINA_BASE = "catalina.base";
-     
+
+    private static final String CATALINA_BASE = "catalina.base";
+
     @Autowired
     @Qualifier("configuration")
     PropertiesConfiguration configuration;
-    
+
     @Bean(name = "datasourceConf")
     public PropertiesConfiguration datasourceConfig() throws ConfigurationException {
         return getConfigiration(configuration.getString("file.configuration.datasource"));
     }
-    
+
     @Bean(name = "activeMQConf")
     public PropertiesConfiguration activeMQConfiguration() throws ConfigurationException {
-         return getConfigiration(configuration.getString("file.configuration.activemq"));
+        return getConfigiration(configuration.getString("file.configuration.activemq"));
     }
-     
-    
 
     private PropertiesConfiguration getConfigiration(String propertiesPath) throws ConfigurationException {
         if (!(propertiesPath.startsWith(File.separator))) {
-            propertiesPath = System.getProperty(CATALINA_BASE) + "/conf/"+propertiesPath ;
-        }       
+            propertiesPath = System.getProperty(CATALINA_BASE) + "/conf/" + propertiesPath;
+        }
         PropertiesConfiguration conf = new PropertiesConfiguration(propertiesPath);
         conf.setReloadingStrategy(new FileChangedReloadingStrategy());
         return conf;
     }
-    
 
 }

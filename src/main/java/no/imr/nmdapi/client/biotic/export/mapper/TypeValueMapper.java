@@ -9,8 +9,8 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author Terry Hannant <a5119>
  */
-public class TypeValueMapper  implements RowMapper<TypeValue> {
-    
+public class TypeValueMapper implements RowMapper<TypeValue> {
+
     private String typeName;
     private String valueName;
 
@@ -18,15 +18,15 @@ public class TypeValueMapper  implements RowMapper<TypeValue> {
         this.typeName = typeName;
         this.valueName = valueName;
     }
-    
-    
-    public TypeValue  mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+    @Override
+    public TypeValue mapRow(ResultSet rs, int rowNum) throws SQLException {
         TypeValue platform = new TypeValue();
 
         platform.setType(rs.getString(typeName));
         platform.setValue(rs.getString(valueName));
-           
+
         return platform;
     }
-    
+
 }

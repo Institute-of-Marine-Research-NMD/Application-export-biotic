@@ -9,6 +9,7 @@ import java.util.Map;
 import no.imr.nmdapi.client.biotic.export.dao.AgeDeterminationDAO;
 import no.imr.nmdapi.client.biotic.export.dao.CatchSampleDAO;
 import no.imr.nmdapi.client.biotic.export.dao.FishStationDAO;
+import no.imr.nmdapi.client.biotic.export.dao.FixedCoastalstationDAO;
 import no.imr.nmdapi.client.biotic.export.dao.PreyDAO;
 import no.imr.nmdapi.client.biotic.export.dao.IndividualSampleDAO;
 import no.imr.nmdapi.client.biotic.export.dao.PlatformDAO;
@@ -19,6 +20,7 @@ import no.imr.nmdapi.client.biotic.export.dao.UdpDAO;
 import no.imr.nmdapi.client.biotic.export.pojo.AgeDetermination;
 import no.imr.nmdapi.client.biotic.export.pojo.CatchSample;
 import no.imr.nmdapi.client.biotic.export.pojo.FishStation;
+import no.imr.nmdapi.client.biotic.export.pojo.FixedCoastalStation;
 import no.imr.nmdapi.client.biotic.export.pojo.IndividualSample;
 import no.imr.nmdapi.client.biotic.export.pojo.Prey;
 
@@ -71,6 +73,8 @@ public class BioticGenerator {
     StockDAO stockDAO;
     @Autowired
     UdpDAO udpDAO;
+    @Autowired
+    FixedCoastalstationDAO fixedstation;
 
     public MissionType generate(Mission mission, String cruiseCode) {
 
@@ -110,6 +114,15 @@ public class BioticGenerator {
         for (FishStation fishStation : fishStations) {
             addFishStationUDPLookups(fishStation.getType());
             addFishStationUDPValues(fishStation);
+            if (fishStation.getType().getFixedstation() != null && fishStation.getType().getFixedstation().getValue() != null && !fishStation.getType().getFixedstation().getValue().equals("")) {
+
+                List<FixedCoastalStation> fcs = fixedstation.getFIshStations(fishStation.getType().getFixedstation().getValue());
+                if (!fcs.isEmpty()) {
+                    StringDescriptionType fx = new StringDescriptionType();
+                    fx.setValue(fcs.get(0).getName());
+                    fishStation.getType().setFixedstation(fx);
+                }
+            }
             List<CatchSample> catchSamples = catchSampleDAO.getCatchSamples(fishStation.getId());
             for (CatchSample catchSample : catchSamples) {
                 if (catchSample.getTaxaID() != null) {
@@ -160,7 +173,7 @@ public class BioticGenerator {
                             if ((weightRes != null) && (!weightRes.isEmpty())) {
                                 StringDescriptionType weigthResType = new StringDescriptionType();
                                 weigthResType.setValue(weightRes);
-                                prey.getType().setWeightresolution(new StringDescriptionType());
+                                prey.getType().setWeightresolution(weigthResType);
                             }
                         }
                         addPreyUDPLookups(prey.getType());
@@ -206,6 +219,7 @@ public class BioticGenerator {
         catchSample.setSampleproducttype(getUDPLookup(catchSample.getSampleproducttype()));
         catchSample.setStomach(getUDPLookup(catchSample.getStomach()));
         catchSample.setAgingstructure(getUDPLookup(catchSample.getAgingstructure()));
+        catchSample.setForeignobject(getUDPLookup(catchSample.getForeignobject()));
     }
 
     private void addIndividualSampleUDPLookups(IndividualType individualSample) {
@@ -218,6 +232,7 @@ public class BioticGenerator {
         individualSample.setStomachfillfield(getUDPLookup(individualSample.getStomachfillfield()));
         individualSample.setLiverparasite(getUDPLookup(individualSample.getLiverparasite()));
         individualSample.setProducttype(getUDPLookup(individualSample.getProducttype()));
+        individualSample.setStomachfilllab(getUDPLookup(individualSample.getStomachfilllab()));
         //special case to ensure no blank elements are added if blank udp values are found
 //        if ( (individualSample.getProducttype()!= null) &&  (individualSample.getProducttype().getValue().isEmpty())) {
 //            individualSample.setProducttype(null);
@@ -267,8 +282,12 @@ public class BioticGenerator {
     private void addTag(IndividualSample individualSample) {
         List<TagType> tagList = tagDAO.getTag(individualSample.getId());
         if (tagList.size() > 0) {
+            for (TagType tagList1 : tagList) {
+                tagList1.setTagtype(getUDPLookup(tagList1.getTagtype()));
+                individualSample.getType().getTag().add(tagList1);
+            }
             //TODO Can there ever be more than one tag?
-            individualSample.getType().getTag().addAll(tagList);
+
         }
     }
 
@@ -350,7 +369,7 @@ public class BioticGenerator {
                 case "mantlelength":
                     individualSample.getType().setMantlelength(BigDecimal.valueOf(udpValue.getValueDouble()));
                     break;
-                case "meroslenth":
+                case "meroslength":
                     individualSample.getType().setMeroslength(BigDecimal.valueOf(udpValue.getValueDouble()));
                     break;
                 case "meroswidth":
@@ -374,7 +393,7 @@ public class BioticGenerator {
                 case "snouttoendoftail":
                     individualSample.getType().setSnouttoendoftail(BigDecimal.valueOf(udpValue.getValueDouble()));
                     break;
-                case "snouttoendosqueezed":
+                case "snouttoendsqueezed":
                     individualSample.getType().setSnouttoendsqueezed(BigDecimal.valueOf(udpValue.getValueDouble()));
                     break;
                 case "sopp_sporer":
@@ -419,7 +438,7 @@ public class BioticGenerator {
                 case "FishingGround":
                     fishStation.getType().setFishingground(getUDPLookup(stringDesc));
                     break;
-                case "flora":
+                case "Flora":
                     fishStation.getType().setFlora(getUDPLookup(stringDesc));
                     break;
                 case "flowconst":
@@ -428,16 +447,16 @@ public class BioticGenerator {
                 case "flowcount":
                     fishStation.getType().setFlowcount(BigInteger.valueOf(udpValue.getValueInteger()));
                     break;
-                case "haulvalidity":
+                case "HaulValidity":
                     fishStation.getType().setHaulvalidity(getUDPLookup(stringDesc));
                     break;
                 case "sea":
                     fishStation.getType().setSea(getUDPLookup(stringDesc));
                     break;
-                case "vegetationcover":
+                case "VegetationCover":
                     fishStation.getType().setVegetationcover(getUDPLookup(stringDesc));
                     break;
-                case "visibility":
+                case "Visibility":
                     fishStation.getType().setVisibility(getUDPLookup(stringDesc));
                     break;
                 case "waterlevel":
@@ -454,6 +473,9 @@ public class BioticGenerator {
                     break;
                 case "DeliveryPlace":
                     fishStation.getType().setLandingsite(getUDPLookup(stringDesc));
+                    break;
+                case "NumberOfGroundVessels":
+                    fishStation.getType().setCountofvessels(BigInteger.valueOf(udpValue.getValueInteger()));
                     break;
             }
         }

@@ -7,7 +7,7 @@ import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CatchsampleType;
  * @author Terry Hannant <a5119>
  */
 public class CatchSample {
-    
+
     private String id;
     private String stockID;
     private String taxaID;
@@ -21,8 +21,7 @@ public class CatchSample {
     public void setStockID(String stockID) {
         this.stockID = stockID;
     }
-    
-    
+
     private CatchsampleType type;
 
     public CatchSample(String id) {
@@ -45,14 +44,8 @@ public class CatchSample {
         this.type = type;
     }
 
-    
-    
     public CatchsampleType getType() {
         return type;
     }
-    
-    
-    
-            
 
 }

@@ -10,18 +10,19 @@ import org.springframework.jdbc.core.RowMapper;
  * @author Terry Hannant <a5119>
  */
 public class UdpValueMapper implements RowMapper<UdpValue> {
-    
+
+    @Override
     public UdpValue mapRow(ResultSet rs, int rowNum) throws SQLException {
         UdpValue udpValue = new UdpValue();
-       
+
         udpValue.setValueText(rs.getString("value_text"));
         udpValue.setValueUDPListID(rs.getString("value_udp_list_guid"));
         udpValue.setValueDouble(rs.getDouble("value_double"));
         udpValue.setValueInteger(rs.getLong("value_integer"));
-        
+
         udpValue.setPropertyName(rs.getString("propertyname"));
-        
+
         return udpValue;
-    } 
-    
+    }
+
 }

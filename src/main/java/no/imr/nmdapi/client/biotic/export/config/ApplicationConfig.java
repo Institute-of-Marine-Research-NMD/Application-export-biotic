@@ -17,8 +17,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ApplicationConfig {
-    
-      
+
     @Bean(name = "configuration")
     public PropertiesConfiguration configuration() throws ConfigurationException {
         org.apache.commons.configuration.PropertiesConfiguration configuration = new org.apache.commons.configuration.PropertiesConfiguration(System.getProperty("catalina.base") + "/conf/biotic_queue_v1.properties");
@@ -27,29 +26,24 @@ public class ApplicationConfig {
         return configuration;
     }
 
-    @Bean(name= "errorProcessor")
-    public ExceptionProcessor exceptionProcessor(){
+    @Bean(name = "errorProcessor")
+    public ExceptionProcessor exceptionProcessor() {
         return new ExceptionProcessor("bioticQueue");
     }
-   
+
     @Bean
     public BioticGenerator bioticGenerator() {
         return new BioticGenerator();
     }
-    
+
     @Bean
     public GenerateAll generareAllRoute() {
         return new GenerateAll();
     }
 
-   @Bean
+    @Bean
     public GenerateUpdated generareUpdatedlRoute() {
         return new GenerateUpdated();
     }
 
-    
-    
-
-    
-     
 }

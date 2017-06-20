@@ -24,6 +24,5 @@ public class MissionMapper implements RowMapper<Mission> {
         m.setMissionType(rs.getString("missiontype"));
         return m;
     }
-    
-    
+
 }

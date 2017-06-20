@@ -8,8 +8,8 @@ import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.IndividualType;
  */
 public class IndividualSample {
 
-   private String id;
-   private IndividualType type;
+    private String id;
+    private IndividualType type;
 
     public IndividualType getType() {
         return type;
@@ -26,7 +26,5 @@ public class IndividualSample {
     public String getId() {
         return id;
     }
-   
-   
-    
+
 }
