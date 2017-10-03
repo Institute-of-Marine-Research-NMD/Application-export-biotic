@@ -20,7 +20,7 @@ public class GenerateUpdated extends RouteBuilder {
     @Override
     public void configure() {
 
-        onException(CantWriteFileException.class).continued(true).
+        onException(Exception.class).continued(true).
                 process(new ExceptionProcessor(configuration.getString("application.name"))).
                 to("jms:queue:".concat(configuration.getString("queue.outgoing.criticalFailure")));
 
