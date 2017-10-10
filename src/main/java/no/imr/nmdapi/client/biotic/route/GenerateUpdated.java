@@ -1,7 +1,6 @@
 package no.imr.nmdapi.client.biotic.route;
 
 import no.imr.messaging.processor.ExceptionProcessor;
-import no.imr.nmdapi.exceptions.CantWriteFileException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.util.UnsafeUriCharactersEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
