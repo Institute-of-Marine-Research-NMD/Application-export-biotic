@@ -1,11 +1,14 @@
 package no.imr.nmdapi.client.biotic.export.dao;
 
 import java.util.List;
+
 import javax.sql.DataSource;
-import no.imr.nmdapi.client.biotic.export.mapper.IndividualSampleMapper;
-import no.imr.nmdapi.client.biotic.export.pojo.IndividualSample;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import no.imr.nmdapi.client.biotic.export.mapper.IndividualSampleMapper;
+import no.imr.nmdapi.client.biotic.export.pojo.IndividualSample;
 
 /**
  *
@@ -42,7 +45,7 @@ public class IndividualSampleDAO {
             + "comment"
             + " FROM nmdbiotic.individual i "
             + " where i.id_sample = ?";
-//            + " order by individual_no";
+//          + " order by individual_no ";
 
     public List<IndividualSample> getIndividualSamples(String sampleID) {
         return jdbcTemplate.query(baseQueryString, new IndividualSampleMapper(), sampleID);
