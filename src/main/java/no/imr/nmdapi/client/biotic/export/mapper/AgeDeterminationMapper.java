@@ -20,76 +20,27 @@ public class AgeDeterminationMapper implements RowMapper<AgeDetermination> {
 
         AgedeterminationType ageDeterminationType = new AgedeterminationType();
 
-        //  ageDeterminationType.setNo(BigInteger.valueOf(rs.getLong("part_no")));
-        if (rs.getString("age") != null) {
-            ageDeterminationType.setAge(BigInteger.valueOf(rs.getLong("age")));
-        }
+        ageDeterminationType.setAge(Converter.toInteger(rs.getBigDecimal("age")));
+        ageDeterminationType.setCalibration(Converter.toInteger(rs.getBigDecimal("calibration")));
+        ageDeterminationType.setCoastalannuli(Converter.toInteger(rs.getBigDecimal("coastal_annuli")));
+        ageDeterminationType.setGrowthzone1(Converter.toInteger(rs.getBigDecimal("growth_zone_1")));
+        ageDeterminationType.setGrowthzone2(Converter.toInteger(rs.getBigDecimal("growth_zone_2")));
+        ageDeterminationType.setGrowthzone3(Converter.toInteger(rs.getBigDecimal("growth_zone_3")));
+        ageDeterminationType.setGrowthzone4(Converter.toInteger(rs.getBigDecimal("growth_zone_4")));
+        ageDeterminationType.setGrowthzone5(Converter.toInteger(rs.getBigDecimal("growth_zone_5")));
+        ageDeterminationType.setGrowthzone6(Converter.toInteger(rs.getBigDecimal("growth_zone_6")));
+        ageDeterminationType.setGrowthzone7(Converter.toInteger(rs.getBigDecimal("growth_zone_7")));
+        ageDeterminationType.setGrowthzone8(Converter.toInteger(rs.getBigDecimal("growth_zone_8")));
+        ageDeterminationType.setGrowthzone9(Converter.toInteger(rs.getBigDecimal("growth_zone_9")));
+        ageDeterminationType.setGrowthzonestotal(Converter.toInteger(rs.getBigDecimal("growth_zones_total")));
 
-        if (rs.getLong("spawning_age") != 0) {
-            ageDeterminationType.setSpawningage(BigInteger.valueOf(rs.getLong("spawning_age")));
-        }
-
-        if (rs.getString("spawning_zones") != null) {
-            ageDeterminationType.setSpawningzones(BigInteger.valueOf(rs.getLong("spawning_zones")));
-        }
-
-        if (rs.getString("id_r_udplist_readability") != null) {
-            ageDeterminationType.setReadability(newStringDescriptionType(rs.getString("id_r_udplist_readability"), null));
-        }
-
-        if (rs.getLong("growth_zone_1") != 0) {
-            ageDeterminationType.setGrowthzone1(BigInteger.valueOf(rs.getLong("growth_zone_1")));
-        }
-
-        if (rs.getLong("growth_zone_2") != 0) {
-            ageDeterminationType.setGrowthzone2(BigInteger.valueOf(rs.getLong("growth_zone_2")));
-        }
-        if (rs.getLong("growth_zone_3") != 0) {
-            ageDeterminationType.setGrowthzone3(BigInteger.valueOf(rs.getLong("growth_zone_3")));
-        }
-        if (rs.getLong("growth_zone_4") != 0) {
-            ageDeterminationType.setGrowthzone4(BigInteger.valueOf(rs.getLong("growth_zone_4")));
-        }
-        if (rs.getLong("growth_zone_5") != 0) {
-            ageDeterminationType.setGrowthzone5(BigInteger.valueOf(rs.getLong("growth_zone_5")));
-        }
-        if (rs.getLong("growth_zone_6") != 0) {
-            ageDeterminationType.setGrowthzone6(BigInteger.valueOf(rs.getLong("growth_zone_6")));
-        }
-        if (rs.getLong("growth_zone_7") != 0) {
-            ageDeterminationType.setGrowthzone7(BigInteger.valueOf(rs.getLong("growth_zone_7")));
-        }
-        if (rs.getLong("growth_zone_8") != 0) {
-            ageDeterminationType.setGrowthzone8(BigInteger.valueOf(rs.getLong("growth_zone_8")));
-        }
-        if (rs.getLong("growth_zone_9") != 0) {
-            ageDeterminationType.setGrowthzone9(BigInteger.valueOf(rs.getLong("growth_zone_9")));
-        }
-        if (rs.getLong("growth_zones_total") != 0) {
-            ageDeterminationType.setGrowthzonestotal(BigInteger.valueOf(rs.getLong("growth_zones_total")));
-        }
-
-        if (rs.getString("id_r_udplist_otolith_centre") != null) {
-            ageDeterminationType.setOtolithcentre(newStringDescriptionType(rs.getString("id_r_udplist_otolith_centre"), null));
-        }
-
-        if (rs.getString("id_r_udplist_otolith_edge") != null) {
-            ageDeterminationType.setOtolithedge(newStringDescriptionType(rs.getString("id_r_udplist_otolith_edge"), null));
-        }
-
-        if (rs.getString("id_r_udplist_type") != null) {
-            ageDeterminationType.setOtolithtype(newStringDescriptionType(rs.getString("id_r_udplist_type"), null));
-        }
-
-        if (rs.getString("calibration") != null) {
-            ageDeterminationType.setCalibration(BigInteger.valueOf(rs.getInt("calibration")));
-        }
-        if (rs.getString("coastal_annuli") != null) {
-            ageDeterminationType.setCoastalannuli(BigInteger.valueOf(rs.getInt("coastal_annuli")));
-        }
-        if (rs.getString("oceanic_annuli") != null) {
-            ageDeterminationType.setOceanicannuli(BigInteger.valueOf(rs.getInt("oceanic_annuli")));
-        }
+        ageDeterminationType.setOceanicannuli(Converter.toInteger(rs.getBigDecimal("oceanic_annuli")));
+        ageDeterminationType.setOtolithcentre(Converter.toStringDescriptionType(rs.getString("id_r_udplist_otolith_centre")));
+        ageDeterminationType.setOtolithedge(Converter.toStringDescriptionType(rs.getString("id_r_udplist_otolith_edge")));
+        ageDeterminationType.setOtolithtype(Converter.toStringDescriptionType(rs.getString("id_r_udplist_type")));
+        ageDeterminationType.setReadability(Converter.toStringDescriptionType(rs.getString("id_r_udplist_readability")));
+        ageDeterminationType.setSpawningage(Converter.toInteger(rs.getBigDecimal("spawning_age")));
+        ageDeterminationType.setSpawningzones(Converter.toInteger(rs.getBigDecimal("spawning_zones")));
         result.setType(ageDeterminationType);
         return result;
     }

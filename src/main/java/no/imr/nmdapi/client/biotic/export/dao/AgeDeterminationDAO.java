@@ -1,11 +1,14 @@
 package no.imr.nmdapi.client.biotic.export.dao;
 
 import java.util.List;
+
 import javax.sql.DataSource;
-import no.imr.nmdapi.client.biotic.export.mapper.AgeDeterminationMapper;
-import no.imr.nmdapi.client.biotic.export.pojo.AgeDetermination;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import no.imr.nmdapi.client.biotic.export.mapper.AgeDeterminationMapper;
+import no.imr.nmdapi.client.biotic.export.pojo.AgeDetermination;
 
 /**
  *
@@ -42,7 +45,8 @@ public class AgeDeterminationDAO {
             + " coastal_annuli,"
             + " oceanic_annuli"
             + " FROM nmdbiotic.age_determination a"
-            + " where  a.id_individual = ?";
+            + " where  a.id_individual = ? limit 1";
+            //+ " where  a.id_individual = ?";
 
     public List<AgeDetermination> getAgeDetermination(String individualID) {
         return jdbcTemplate.query(baseQueryString, new AgeDeterminationMapper(), individualID);

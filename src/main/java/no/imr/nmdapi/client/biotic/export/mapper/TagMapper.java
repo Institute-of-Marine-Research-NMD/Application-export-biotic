@@ -1,11 +1,11 @@
 package no.imr.nmdapi.client.biotic.export.mapper;
 
-import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.TagType;
+
 import org.springframework.jdbc.core.RowMapper;
+
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.TagType;
 
 /**
  *
@@ -17,22 +17,17 @@ public class TagMapper implements RowMapper<TagType> {
     public TagType mapRow(ResultSet rs, int i) throws SQLException {
         TagType result = new TagType();
 
-        result.setTagno(BigInteger.valueOf(rs.getInt("mark_number")));
-
-        if (rs.getString("id_r_udplist_markingtype") != null) {
-            result.setTagtype(newStringDescriptionType(rs.getString("id_r_udplist_markingtype"), null));
-        }
+//        result.setTagno(BigInteger.valueOf(rs.getInt("mark_number")));
+//
+//        if (rs.getString("id_r_udplist_markingtype") != null) {
+//            result.setTagtype(newStringDescriptionType(rs.getString("id_r_udplist_markingtype"), null));
+//        }
+        
+        result.setTagno(Converter.toInteger(rs.getBigDecimal("mark_number")));
+        result.setTagtype(Converter.toStringDescriptionType(rs.getString("id_r_udplist_markingtype")));        
 
         return result;
     }
 
-    private StringDescriptionType newStringDescriptionType(String value, String description) {
-        StringDescriptionType result = new StringDescriptionType();
-        result.setValue(value);
-        if (description != null) {
-            result.setDescription(description);
-        }
-        return result;
-    }
 
 }

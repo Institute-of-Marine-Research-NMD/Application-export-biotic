@@ -91,7 +91,7 @@ public class BioticGenerator {
 
         //TODO check if this is still needed
         if (platformCodes.containsKey("Ship Name")) {
-            //biotic.setPlatformName(platformCodes.get("Ship Name"));
+            biotic.setPlatformname(platformCodes.get("Ship Name"));
         }
 
         if (platformCodes.containsKey("ITU Call Sign")) {
@@ -402,6 +402,10 @@ public class BioticGenerator {
                 case "svartprikk":
                     individualSample.getType().setBlackspot(getUDPLookup(stringDesc));
                     break;
+                case "skallalder":
+                    individualSample.getType().setMoultingstage(getUDPLookup(stringDesc));
+                    break;           
+					
             }
         }
 
@@ -414,7 +418,7 @@ public class BioticGenerator {
             stringDesc.setValue(udpValue.getValueUDPListID());
             switch (udpValue.getPropertyName()) {
                 case "AbundanceCategory":
-                    catchSample.getType().setAbundancecategory(stringDesc);
+                    catchSample.getType().setAbundancecategory(getUDPLookup(stringDesc));
                     break;
             }
         }

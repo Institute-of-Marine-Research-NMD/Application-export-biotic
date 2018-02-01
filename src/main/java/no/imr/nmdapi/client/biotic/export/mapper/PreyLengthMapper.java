@@ -1,11 +1,11 @@
 package no.imr.nmdapi.client.biotic.export.mapper;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreylengthType;
+
 import org.springframework.jdbc.core.RowMapper;
+
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreylengthType;
 
 /**
  *
@@ -17,11 +17,13 @@ public class PreyLengthMapper implements RowMapper<PreylengthType> {
     public PreylengthType mapRow(ResultSet rs, int i) throws SQLException {
         PreylengthType result = new PreylengthType();
 
-        result.setLength(BigDecimal.valueOf(rs.getDouble("length")));
-
-        if (rs.getLong("count") != 0) {
-            result.setCount(BigInteger.valueOf(rs.getLong("count")));
-        }
+//        result.setLength(BigDecimal.valueOf(rs.getDouble("length")));
+//
+//        if (rs.getLong("count") != 0) {
+//            result.setCount(BigInteger.valueOf(rs.getLong("count")));
+//        }
+        result.setLength(Converter.toDouble(rs.getBigDecimal("length")));        
+        result.setCount(Converter.toInteger(rs.getBigDecimal("count")));
         return result;
     }
 

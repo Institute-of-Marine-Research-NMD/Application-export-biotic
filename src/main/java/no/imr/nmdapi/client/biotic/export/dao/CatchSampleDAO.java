@@ -39,6 +39,7 @@ public class CatchSampleDAO {
             + " sampled_count,"
             + " s.sampled_volume,"
             + "id_r_udplist_stomach,"
+            + "s.raising_factor,"
             + " id_r_stock,"
             + "id_r_udplist_otskj,"
             + "inumber,"
