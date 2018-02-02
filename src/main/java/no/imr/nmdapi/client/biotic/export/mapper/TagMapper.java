@@ -17,12 +17,6 @@ public class TagMapper implements RowMapper<TagType> {
     public TagType mapRow(ResultSet rs, int i) throws SQLException {
         TagType result = new TagType();
 
-//        result.setTagno(BigInteger.valueOf(rs.getInt("mark_number")));
-//
-//        if (rs.getString("id_r_udplist_markingtype") != null) {
-//            result.setTagtype(newStringDescriptionType(rs.getString("id_r_udplist_markingtype"), null));
-//        }
-        
         result.setTagno(Converter.toInteger(rs.getBigDecimal("mark_number")));
         result.setTagtype(Converter.toStringDescriptionType(rs.getString("id_r_udplist_markingtype")));        
 

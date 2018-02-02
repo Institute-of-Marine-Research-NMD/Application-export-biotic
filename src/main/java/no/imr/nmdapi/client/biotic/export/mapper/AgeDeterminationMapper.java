@@ -1,12 +1,12 @@
 package no.imr.nmdapi.client.biotic.export.mapper;
 
-import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
 import no.imr.nmdapi.client.biotic.export.pojo.AgeDetermination;
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.AgedeterminationType;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
-import org.springframework.jdbc.core.RowMapper;
 
 /**
  *
@@ -42,15 +42,6 @@ public class AgeDeterminationMapper implements RowMapper<AgeDetermination> {
         ageDeterminationType.setSpawningage(Converter.toInteger(rs.getBigDecimal("spawning_age")));
         ageDeterminationType.setSpawningzones(Converter.toInteger(rs.getBigDecimal("spawning_zones")));
         result.setType(ageDeterminationType);
-        return result;
-    }
-
-    private StringDescriptionType newStringDescriptionType(String value, String description) {
-        StringDescriptionType result = new StringDescriptionType();
-        result.setValue(value);
-        if (description != null) {
-            result.setDescription(description);
-        }
         return result;
     }
 

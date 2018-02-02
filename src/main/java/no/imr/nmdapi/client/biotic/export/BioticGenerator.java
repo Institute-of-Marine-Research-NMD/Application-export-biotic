@@ -1,4 +1,4 @@
-package no.imr.nmdapi.client.biotic.export;
+    package no.imr.nmdapi.client.biotic.export;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -6,13 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import no.imr.nmdapi.client.biotic.export.dao.AgeDeterminationDAO;
 import no.imr.nmdapi.client.biotic.export.dao.CatchSampleDAO;
 import no.imr.nmdapi.client.biotic.export.dao.FishStationDAO;
 import no.imr.nmdapi.client.biotic.export.dao.FixedCoastalstationDAO;
-import no.imr.nmdapi.client.biotic.export.dao.PreyDAO;
 import no.imr.nmdapi.client.biotic.export.dao.IndividualSampleDAO;
 import no.imr.nmdapi.client.biotic.export.dao.PlatformDAO;
+import no.imr.nmdapi.client.biotic.export.dao.PreyDAO;
 import no.imr.nmdapi.client.biotic.export.dao.StockDAO;
 import no.imr.nmdapi.client.biotic.export.dao.TagDAO;
 import no.imr.nmdapi.client.biotic.export.dao.TaxaDAO;
@@ -22,8 +25,10 @@ import no.imr.nmdapi.client.biotic.export.pojo.CatchSample;
 import no.imr.nmdapi.client.biotic.export.pojo.FishStation;
 import no.imr.nmdapi.client.biotic.export.pojo.FixedCoastalStation;
 import no.imr.nmdapi.client.biotic.export.pojo.IndividualSample;
+import no.imr.nmdapi.client.biotic.export.pojo.Mission;
 import no.imr.nmdapi.client.biotic.export.pojo.Prey;
-
+import no.imr.nmdapi.client.biotic.export.pojo.Taxa;
+import no.imr.nmdapi.client.biotic.export.pojo.UdpValue;
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.AgedeterminationType;
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CatchsampleType;
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.CopepodedevstageType;
@@ -34,13 +39,6 @@ import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreyType;
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.PreylengthType;
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.StringDescriptionType;
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.TagType;
-
-import org.slf4j.LoggerFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import no.imr.nmdapi.client.biotic.export.pojo.Mission;
-import no.imr.nmdapi.client.biotic.export.pojo.Taxa;
-import no.imr.nmdapi.client.biotic.export.pojo.UdpValue;
 
 /**
  *

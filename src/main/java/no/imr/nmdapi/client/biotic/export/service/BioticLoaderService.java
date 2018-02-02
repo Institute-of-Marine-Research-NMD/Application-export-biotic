@@ -2,9 +2,11 @@ package no.imr.nmdapi.client.biotic.export.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -12,25 +14,26 @@ import javax.xml.bind.PropertyException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.camel.Exchange;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import no.imr.messaging.exception.ProcessingException;
 import no.imr.nmd.commons.dataset.jaxb.DataTypeEnum;
 import no.imr.nmd.commons.dataset.jaxb.QualityEnum;
 import no.imr.nmdapi.client.biotic.export.BioticGenerator;
 import no.imr.nmdapi.client.biotic.export.dao.BioticMissionDAO;
 import no.imr.nmdapi.client.biotic.export.dao.PlatformDAO;
-import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.MissionsType;
-import org.apache.camel.Exchange;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import no.imr.nmdapi.client.biotic.export.pojo.Mission;
 import no.imr.nmdapi.exceptions.CantWriteFileException;
 import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.MissionType;
+import no.imr.nmdapi.generic.nmdbiotic.domain.v1_4.MissionsType;
 import no.imr.nmdapi.lib.nmdapipathgenerator.PathGenerator;
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 
 /**
  *
@@ -57,7 +60,7 @@ public class BioticLoaderService {
     BioticGenerator bioticGenerator;
 
     private PathGenerator pathGenerator = new PathGenerator();
-
+    
     public void generatorBioticToFile(Exchange ex) throws PropertyException, JAXBException {
 
         String missionID = ex.getIn().getBody(String.class);
@@ -66,23 +69,29 @@ public class BioticLoaderService {
 
         Mission mission = bioticMissionDAO.getMission(missionID);
         String cruiseCode = bioticMissionDAO.getCruiseCode(missionID);
-
-        MissionType bioticMission = bioticGenerator.generate(mission, cruiseCode);
-
+        
         if ((cruiseCode == null) || (cruiseCode.trim().length() == 0)) {
             delivery = bioticMissionDAO.getDelivery(missionID);
         } else {
             delivery = cruiseCode;
         }
-
+        
         Map<String, String> platformCodes = platformDAO.getCruisePlatformCodes(missionID);
         String platformPath = pathGenerator.createPlatformURICode(platformCodes);
+        
+        MissionType biotic = new MissionType();
+        biotic.setMissionnumber(BigInteger.valueOf(mission.getMissionNumber()));
+        biotic.setMissiontype(mission.getMissionTypeCode());
+        biotic.setMissiontypename(mission.getMissionType());
+        biotic.setYear(BigInteger.valueOf(mission.getStartYear()));
 
-        File destinationFile = pathGenerator.generatePath(configuration.getString("file.location"), bioticMission.getMissiontypename(),
-                bioticMission.getYear().toString(), platformPath, delivery, "biotic");
+        File destinationFile = pathGenerator.generatePath(configuration.getString("file.location"), biotic.getMissiontypename(),
+                biotic.getYear().toString(), platformPath, delivery, "biotic"); 
+        
+        MissionType bioticMission = bioticGenerator.generate(mission, cruiseCode);
 
         writeToFile(bioticMission, destinationFile, delivery);
-
+        
         ex.getOut().setHeader("imr:datatype", DataTypeEnum.BIOTIC.toString());
         ex.getOut().setHeader("imr:datasetname", "data");
         ex.getOut().setHeader("imr:owner", "imr");
